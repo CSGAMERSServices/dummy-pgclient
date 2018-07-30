@@ -1,0 +1,23 @@
+{
+  "name": "dummy-pgclient",
+  "version": "1.0.0",
+  "description": "a test for pgclient",
+  "main": "index.js",
+  "repository": "git@github.com:SalesforceCloudServices/dummy-pgclient.git",
+  "author": "Daniel Feinberg",
+  "license": "Unlicense",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "env-var": "^3.3.0",
+    "pg": "^7.4.1",
+    "pg-query-stream": "^1.1.1",
+    "typeorm": "^0.2.6",
+    "typescript": "^2.6.2",
+    "winston": "^3.0.0"
+  },
+  "engines": {
+    "node": "^8.4.0",
+    "yarn": "^1.3.2"
+  },
+  "scripts": {}
+}
