@@ -30,13 +30,22 @@ function initializePGConnection() {
         ssl: true
         })
 
-    client.connect((err) => {
+    client.connect((err, cl) => {
         if (err) {
             logger.error(`Failed to connect to database ${conString} with error ${err}`);
             process.exit(1);
         } else {
             logger.info(`Connection to database ${conString} has been established successfully`);
-            process.exit(0);
+            cl.query('SELECT COUNT(*) from users', (err, res) => {
+                if (err) {
+                    logger.error(`Can't query db (connection was established though. Error ${err}`);
+                    cl.end();
+                    process.exit(1);
+                } else {
+                    logger.info(`number of clients in the db = ${res.rows[0]["count"]}`);
+                    process.exit(0);
+                }
+            });
         }
     })
 }
