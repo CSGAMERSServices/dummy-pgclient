@@ -25,6 +25,7 @@ const logger = winston.createLogger({
 
 function initializePGConnection() {
     var conString = env.get("DATABASE_URL").required().asString();
+    var timeout = env.get("EXIT_TIMEOUT", "10000").asString();
     var client = new pg.Client({
         connectionString: conString,
         ssl: true
@@ -40,14 +41,21 @@ function initializePGConnection() {
                 if (err) {
                     logger.error(`Can't query db (connection was established though. Error ${err}`);
                     cl.end();
-                    process.exit(1);
+                    setTimeout(exitProcess, timeout, 1)
+                    //process.exit(1);
                 } else {
                     logger.info(`number of clients in the db = ${res.rows[0]["count"]}`);
-                    process.exit(0);
+                    cl.end();
+                    setTimeout(exitProcess, timeout, 0)
+                    // process.exit(0);
                 }
             });
         }
     })
+}
+
+function exitProcess(exitCode) {
+    process.exit(exitCode);
 }
 
 initializePGConnection();
