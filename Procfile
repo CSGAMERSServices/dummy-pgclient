@@ -1,1 +1,2 @@
-connector: node index.js
+pgconnector: node index.js
+typeormconnector: node index-typeorm.js
